@@ -1,0 +1,71 @@
+<html>
+<head>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tree/2.16.0/angular-ui-tree.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tree/2.16.0/angular-ui-tree.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+<div ng-app="myApp">
+    <div ng-controller="myCtrl">
+        <!-- Viewer tree template -->
+        <script type="text/ng-template" id="node_render_viewer">
+            <div ui-tree-handle class="tree-node tree-node-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <button class="btn btn-success btn-xs" ng-if="(node.props && node.props.length > 0) || node.isEmpty === false" data-nodrag ng-click="click(this, node)">
+                                    <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>
+                                </button>
+                            </div>
+                            <div class="col-md-4"><span>{{node.name.split('.').pop()}}</span></div>
+                            <div class="col-md-6" ng-if="node.value !== undefined">
+                                <div class="screen-editable" ng-class="{'has-warning':AnalyzerForm.$dirty}">
+                                    <input class="form-control" name="{{node.name}}" type="text" data-nodrag readonly ng-value="node.value">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ol ng-if="node.props !== undefined" ui-tree-nodes="" ng-model="node.props" ng-class="{hidden: collapsed}">
+                <li ng-repeat="node in node.props" ui-tree-node ng-include="'node_render_viewer'">
+                </li>
+            </ol>
+        </script>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="main-content-breadcrumb">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-3">
+                                <strong><span>Angular-ui-tree - JSON - Lazy loading</span></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div ui-tree="viewerTreeOptions" data-tree-type="viewer" data-nodrop-enabled="true" id="tree-root-viewer">
+                        <ol ui-tree-nodes ng-model="dataBinding">
+                            <li ng-repeat="node in dataBinding" ui-tree-node ng-include="'node_render_viewer'"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <pre class="code">{{ json | json }}</pre>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
