@@ -1,3 +1,3 @@
 # JSON Lazy loading in angular-ui-tree
 
-[Stackoverflow answer](https://stackoverflow.com/questions/28878485/how-to-show-thousands-of-nodes-in-angular-ui-tree/44347387#44347387)
+[Stackoverflow answer](https://stackoverflow.com/questions/22168343/angular-js-render-json-in-tree-like-format/44408262#44408262)
